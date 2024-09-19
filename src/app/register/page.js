@@ -61,7 +61,6 @@ export default function RegisterPage() {
                 <input 
                     type='email' 
                     placeholder='Email' 
-                    required
                     value={email}
                     disabled={creatingUser}
                     onChange={ev => setEmail(ev.target.value)} 
@@ -70,7 +69,6 @@ export default function RegisterPage() {
                 <input 
                     type='password' 
                     placeholder='Password' 
-                    required
                     value={password}
                     disabled={creatingUser}
                     onChange={ev => setPassword(ev.target.value)} 
@@ -79,7 +77,6 @@ export default function RegisterPage() {
                 <input 
                     type='password' 
                     placeholder='Confirm Password' 
-                    required
                     value={confirmPassword}
                     disabled={creatingUser}
                     onChange={ev => setConfirmPassword(ev.target.value)} 
@@ -88,17 +85,18 @@ export default function RegisterPage() {
                 <button 
                     type='submit' 
                     disabled={creatingUser} 
-                    className="block w-full bg-blue-500 text-white py-2"
+                    className="block w-full bg-primary text-white py-2"
                 >
                     Register
                 </button>
                 <div className='my-4 text-center text-gray-500'>
                     or login with provider
                 </div>
-                <button className='flex gap-4 justify-center w-ful py-2'
-                        onClick={() => signIn('google', {callbackUrl:'/'}) }>
-                    <Image src={'/google.png'} alt={'Google Logo'} width={24} height={24} />
-                    Login with Google
+                <button
+                    onClick={() => signIn('google', {callbackUrl:'/'})}
+                    className="flex gap-4 justify-center">
+                    <Image src={'/google.png'} alt={''} width={24} height={24} />
+                    Login with google
                 </button>
                 <div className="text-center my-4 text-gray-500 border-t pt-4">
                     Existing account?{' '}
