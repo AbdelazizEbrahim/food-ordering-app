@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
-import clientPromise from '../../../../libs/mongoConnect'
+import clientPromise from '@/libs/mongoConnect';
 
 export const authOptions = {
   secret: process.env.SECRET,
@@ -23,14 +23,28 @@ export const authOptions = {
       },
       async authorize(credentials) {
         try {
-          await mongoose.connect(process.env.MONGO_URL); // Ensure connection is established
+          // Ensure the mongoose connection is established
+          if (mongoose.connection.readyState === 0) {
+            await mongoose.connect(process.env.MONGO_URL);
+          }
+          
+          // Find user by email
           const user = await User.findOne({ email: credentials.email });
-
-          if (user && await bcrypt.compare(credentials.password, user.password)) {
-            return user;
+          
+          if (!user) {
+            throw new Error("No user found with this email");
+          }
+          
+          // Check password
+          const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
+          if (!isPasswordCorrect) {
+            throw new Error("Password is incorrect");
           }
 
-          return null; // Return null if user not found or password incorrect
+          // Return essential user data
+          const { _id, email, name } = user;
+          return { id: _id, email, name };
+
         } catch (error) {
           console.error("Error during authentication:", error);
           return null;
@@ -38,7 +52,7 @@ export const authOptions = {
       }
     })
   ]
-}
+};
 
 const handler = NextAuth(authOptions);
 

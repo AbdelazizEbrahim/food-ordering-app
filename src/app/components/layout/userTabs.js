@@ -16,12 +16,12 @@ export default function  UserTabs(isAdmin) {
             {isAdmin &&(
                 <>
                   <Link 
-                    className={pathName ==='/categories' ? 'active' : ''}
-                    href={'/categories'}>
+                    className={pathName ==='/category' ? 'active' : ''}
+                    href={'/category'}>
                     Categories
                     </Link>
                   <Link 
-                     className={pathName ==='/menu-items' ? 'active' : ''}
+                     className={pathName.includes('/menu-items') ? 'active' : ''}
                      href={'/menu-items'}> 
                      Menu Items
                   </Link>

@@ -10,6 +10,7 @@ section.hero{
 select,
 input[type="email"],
 input[type="password"],
+input[type="number"],
 input[type="tel"],
 input[type="text"] {
     @apply block w-full mb-2 rounded-xl;
@@ -18,11 +19,12 @@ input[type="text"] {
 input[type="email"]:disabled,
 input[type="password"]:disabled,
 input[type="tel"]:disabled,
+input[type="number"]:disabled
 input[type="text"]:disabled {
     @apply bg-gray-300 border-0 cursor-not-allowed text-gray-500;
 }
 label{
-    @apply text-gray-500 text-sm leading-tight;
+    @apply text-gray-600 text-sm leading-tight;
 }
 label + input{
     margin-top: -2px;

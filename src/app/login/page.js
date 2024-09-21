@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { redirect } from "next/dist/server/api-utils";
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -24,7 +23,9 @@ export default function LoginPage() {
         password,
       });
 
-      if (result.error) {
+      console.log(result); // Debugging: check if result provides more info
+
+      if (result?.error) {
         setError(result.error || "Invalid email or password");
       } else {
         window.location.href = '/'; // Redirect to home page or dashboard
