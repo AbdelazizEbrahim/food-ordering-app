@@ -1,25 +1,33 @@
 import { MenuItem } from "@/models/MenuItem";
+import { NextResponse } from 'next/server';
 import mongoose from "mongoose";
 
 export async function POST(req) {
-  mongoose.connect(process.env.MONGO_URL);
-  const data = await req.json();
-  if (await isAdmin()) {
+    mongoose.connect(process.env.MONGO_URL);
+    const data = await req.json();
+    console.log("posting .... ", data);
     const menuItemDoc = await MenuItem.create(data);
+    if(menuItemDoc){
+      console.log("menu item: ", menuItemDoc);
+    }
     return Response.json(menuItemDoc);
-  } else {
-    return Response.json({});
-  }
 }
 
 export async function PUT(req) {
   mongoose.connect(process.env.MONGO_URL);
-  if (await isAdmin()) {
-    const {_id, ...data} = await req.json();
-    await MenuItem.findByIdAndUpdate(_id, data);
+   const {_id, ...data} = await req.json();
+   console.log("Data to update: ", data);
+   const updateItem = await MenuItem.findByIdAndUpdate(_id, data, { new: true });
+  
+   if (updateItem) {
+      console.log("Updated menu item: ", updateItem);
+  } else {
+      console.log("No menu item found with this ID.");
   }
-  return Response.json(true);
+  
+  return Response.json(updateItem);
 }
+
 
 export async function GET() {
   mongoose.connect(process.env.MONGO_URL);
@@ -28,12 +36,11 @@ export async function GET() {
   );
 }
 
-export async function DELETE(req) {
+export async function  DELETE(req) {
   mongoose.connect(process.env.MONGO_URL);
   const url = new URL(req.url);
   const _id = url.searchParams.get('_id');
-  if (await isAdmin()) {
-    await MenuItem.deleteOne({_id});
-  }
+  await MenuItem.deleteOne({_id});
   return Response.json(true);
 }
+  

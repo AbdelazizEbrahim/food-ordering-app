@@ -2,26 +2,48 @@ import Category from "@/models/Category";
 import mongoose from "mongoose";
 
 export async function POST(req) {
+    // Log that the POST request was received
+    console.log("Received POST request");
+
     mongoose.connect(process.env.MONGO_URL);
+    console.log("Connected to MongoDB");
 
-    console.log('Incoming request:', req); // Log the incoming request
+    // Log request body before parsing
+    const requestBody = await req.json();
+    console.log("Request Body:", requestBody);
 
-    const { name } = await req.json(); // Assuming body is in JSON format
-    console.log('Category name:', name); // Log the extracted name
+    const { name } = requestBody; 
+    console.log("Category Name:", name);
 
     const categoryDoc = await Category.create({ name });
-    console.log('Category document created:', categoryDoc); // Log the created document
+
+    // Log the created document
+    console.log("Category created:", categoryDoc);
 
     return Response.json(categoryDoc);
 }
+
 export async function PUT(req) {
+    // Log that the PUT request was received
+    console.log("Received PUT request");
+
     mongoose.connect(process.env.MONGO_URL);
+    console.log("Connected to MongoDB");
 
-    const { name, _id } = await req.json(); // Destructure directly from the parsed JSON
+    // Log request body before parsing
+    const requestBody = await req.json();
+    console.log("Request Body:", requestBody);
 
-    console.log("id and name: ", name, _id);
-    await Category.updateOne({ _id }, { name }); // Update the category
-    return new Response(JSON.stringify({ success: true }), { status: 200 }); // Return success response
+    const { name, _id } = requestBody; 
+    console.log("Category ID:", _id);
+    console.log("New Category Name:", name);
+
+    const updateResult = await Category.updateOne({ _id }, { name });
+
+    // Log the result of the update operation
+    console.log("Update Result:", updateResult);
+
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
 }
 
 
@@ -31,4 +53,12 @@ export async function GET(req){
     return Response.json(
         await Category.find()
     )
+}
+
+export async function  DELETE(req) {
+    mongoose.connect(process.env.MONGO_URL);
+    const url = new URL(req.url);
+    const _id = url.searchParams.get('_id');
+    await Category.deleteOne({_id});
+    return Response.json(true);
 }

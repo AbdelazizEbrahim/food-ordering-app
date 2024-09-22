@@ -4,24 +4,24 @@ import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
 
 export async function PUT(req) {
-    console.log('PUT request received');
+    // console.log('PUT request received');
 
     try {
-        console.log('Connecting to MongoDB');
+        // console.log('Connecting to MongoDB');
         await mongoose.connect(process.env.MONGO_URL);
-        console.log('MongoDB connected');
+        // console.log('MongoDB connected');
 
         const data = await req.json();
-        console.log('Request body data:', data);
+        // console.log('Request body data:', data);
 
         const session = await getServerSession(authOptions);
-        console.log('Session retrieved:', session);
+        // console.log('Session retrieved:', session);
 
         const email = session.user.email;
-        console.log('User email:', email);
+        // console.log('User email:', email);
 
         const result = await User.updateOne({ email }, data);
-        console.log('Update result:', result);
+        // console.log('Update result:', result);
 
         return new Response(JSON.stringify({ success: true }), {
             status: 200,
@@ -37,25 +37,25 @@ export async function PUT(req) {
 }
 
 export async function GET(req) {
-    console.log('GET request received');
+    // console.log('GET request received');
 
     try {
-        console.log('Connecting to MongoDB');
+        // console.log('Connecting to MongoDB');
         await mongoose.connect(process.env.MONGO_URL);
-        console.log('MongoDB connected');
+        // console.log('MongoDB connected');
 
         const session = await getServerSession(authOptions);
-        console.log('Session retrieved:', session);
+        // console.log('Session retrieved:', session);
 
         const email = session?.user?.email;
-        console.log('User email:', email);
+        // console.log('User email:', email);
 
         if(!email){
             return Response.json(false)
         }
 
         const user = await User.findOne({ email });
-        console.log('User found:', user);
+        // console.log('User found:', user);
 
         return new Response(JSON.stringify(user), {
             status: 200,
