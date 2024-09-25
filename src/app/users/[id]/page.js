@@ -59,6 +59,7 @@ export default function EditUserPage() {
   
   
 
+<<<<<<< HEAD
   if (loading) {
     return 'Loading Edit form...';
   }
@@ -66,6 +67,15 @@ export default function EditUserPage() {
   if (!data.admin) {
     return 'You are Not an admin';
   }
+=======
+  // if (loading) {
+  //   return 'Loading user profile...';
+  // }
+
+  // if (!data.admin) {
+  //   return 'Not an admin';
+  // }
+>>>>>>> a88840aae76b25c17c8f09491e63bcd31a0c8df8
 
   return (
     <section className="mt-8 mx-auto max-w-2xl">
