@@ -5,13 +5,10 @@ import Image from "next/image";
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { storage } from '@/libs/firebase';
 import toast from 'react-hot-toast';
-import Trash from "../icons/Trash";
-import Plus from "../icons/Plus";
 import MenuItemPriceProps from "./menuItemPriceProps";
+
 export default function MenuItemsForm({ onSubmit, menuItem }) {
 
-    console.log('menu itemmms: ', menuItem);
-    
     const [image1, setImage] = useState(null);
     const [load, setLoad] = useState(false);
     const [image, setImage1] = useState('');
@@ -20,17 +17,19 @@ export default function MenuItemsForm({ onSubmit, menuItem }) {
     const [itemName, setItemName] = useState('');
     const [sizes, setSizes] = useState([]);
     const [ingridients, setIngridients] = useState([]);
-    const [category, setCategory] = useState(menuItem?.category || '');
+    const [category, setCategory] = useState(menuItem?.category?._id || ''); // Ensure category ID is fetched correctly
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
+        // Fetch categories
         fetch('/api/category').then(res => {
             res.json().then(categories => {
-              setCategories(categories);
-              console.log("Fetched categories: ", categories); // Log fetched categories
+                setCategories(categories);
+                console.log("Fetched categories:", categories); // Debug categories
             });
-          });
+        });
 
+        // Set menu item details if menuItem is provided
         if (menuItem) {
             setItemName(menuItem.itemName || '');
             setIngridients(menuItem?.ingridients || []);
@@ -38,10 +37,11 @@ export default function MenuItemsForm({ onSubmit, menuItem }) {
             setImage1(menuItem.image || '');
             setPrice(menuItem.price || '');
             setDescription(menuItem.description || '');
-            setCategory(menuItem.category || ''); // Ensure category is set for existing menu item
+            setCategory(menuItem?.category?._id || ''); // Ensure category ID is set correctly
+            console.log("Category ID from menuItem:", menuItem?.category?._id); // Debug category ID
         }
     }, [menuItem]);
-   
+
     function handleFileChange(ev) {
         const file = ev.target.files[0];
         if (file) {
@@ -76,13 +76,9 @@ export default function MenuItemsForm({ onSubmit, menuItem }) {
     return (
         <form className="mt-8 max-w-2xl mx-auto" onSubmit={ev => {
             ev.preventDefault();
-
-            console.log("Form Submitted with: ", {
-                image, itemName, description, price, sizes, ingridients, category // Log form data
-            });
-
+            console.log("Submitting category ID:", category); // Debug category before submission
             onSubmit(ev, {
-                image, itemName, description, price, sizes, ingridients, category,
+                image, itemName, description, price, sizes, ingridients, category, // Pass category correctly
             });
         }}>
             <div className="flex gap-4 items-start">
@@ -107,8 +103,9 @@ export default function MenuItemsForm({ onSubmit, menuItem }) {
                                 type="file"
                                 className="hidden"
                                 onChange={handleFileChange}
+                                disabled={load} // Disable the input when uploading
                             />
-                            <span className="block border border-gray-300 rounded-lg px-8 text-center cursor-pointer py-2">
+                            <span className={`block border border-gray-300 rounded-lg px-8 text-center cursor-pointer py-2 ${load ? 'opacity-50 cursor-not-allowed' : ''}`}>
                                 Upload Image
                             </span>
                         </label>
@@ -132,8 +129,9 @@ export default function MenuItemsForm({ onSubmit, menuItem }) {
                     <label>Category</label>
                     <select value={category} onChange={ev => {
                         setCategory(ev.target.value);
-                        console.log("Category selected: ", ev.target.value); 
+                        console.log("Selected category ID:", ev.target.value); // Log selected category
                     }}>
+                        <option value="" disabled>Select a category</option>
                         {categories?.length > 0 && categories.map(c => (
                             <option key={c._id} value={c._id}>{c.name}</option>
                         ))}
@@ -157,7 +155,7 @@ export default function MenuItemsForm({ onSubmit, menuItem }) {
                     <button
                         type="submit"
                         className={`mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg ${load ? 'opacity-50 cursor-not-allowed' : ''}`}
-                        disabled={load}
+                        disabled={load} // Disable the button when uploading or saving
                     >
                         Save
                     </button>

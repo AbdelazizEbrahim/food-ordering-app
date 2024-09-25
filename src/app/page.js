@@ -1,15 +1,20 @@
+'use client'
+
 import Link from "next/link";
 import Header from "./components/layout/header";
 import Hero from "./components/layout/hero";
 import HomeMenu from "./components/layout/homeMenu";
 import SectionHeaders from "./components/layout/sectionheaders";
+import { useEffect, useState } from "react";
+import MenuItem from "./components/menu/menuItem";
 
 export default function Home() {
+
   return (
      <div>
       <Hero />
       <HomeMenu />
-      <section className='text-center my-16'>
+      <section className='text-center my-16' id="about">
       <SectionHeaders 
             subHeader={'Our Story'}
             mainHeader={'About'}
@@ -27,7 +32,7 @@ export default function Home() {
             </p>
           </div>
       </section>
-      <section className='text-center my-8'>
+      <section className='text-center my-8' id="contact">
         <SectionHeaders
          subHeader={"Don\'t hesitate"}
          mainHeader={'Contact Us'}

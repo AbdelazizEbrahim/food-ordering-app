@@ -51,7 +51,7 @@ export default function ProfilePage() {
     }
 
     if (status === 'loading') {
-        return 'Loading ... ';
+        return 'Loading Profile Information... ';
     }
 
     if (status === 'unauthenticated') {

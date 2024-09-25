@@ -24,7 +24,7 @@ export default function MenuItemsPage() {
     
 
     if(loading){
-        return 'Loading User data ....'
+        return 'Loading Menu items list ....'
     }
     if(!data.admin){
         return 'You are not an admin'

@@ -141,7 +141,7 @@ export default function EditMenuPage(){
     // const userImage = imageUrl || '/user.png'; // Show the uploaded image or a placeholder
 
     if(loading){
-        return 'Loading User data ....'
+        return 'Loading menu item edit form ....'
     }
     if(!data.admin){
         return 'You are not an admin'
@@ -149,8 +149,7 @@ export default function EditMenuPage(){
 
     return (
         <section className="mt-8">
-        <UserTabs is
-        Admin={true} />
+        <UserTabs isAdmin={true} />
         <div className="max-w-2xl mx-auto mt-8">
             <Link href={'/menu-items'} className="button">
                <Left/>

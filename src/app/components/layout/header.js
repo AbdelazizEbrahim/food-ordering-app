@@ -2,13 +2,16 @@
 
 import Link from "next/link"
 import { signOut, useSession } from "next-auth/react";
-
+import { CartContext } from "../AppContext";
+import { useContext } from "react";
+import ShoppingCart from "../icons/ShoppingCart";
 
 export default function Header(){
   const session = useSession();
   console.log(session);
   const status = session.status;
   const userData = session.data?.user;
+  const {cartProducts} = useContext(CartContext);
   let userName = userData?.name || userData?.email;
 
   if (userName && userName.includes(' ')){
@@ -22,10 +25,10 @@ export default function Header(){
         <Link className="text-primary font-semibold text-2xl" href="">
           AMIFA
         </Link>
-        <Link href={''}>Home</Link>
-        <Link href={''}>Menu</Link>
-        <Link href={''}>About</Link>
-        <Link href={''}>Contact</Link>
+        <Link href={'/'}>Home</Link>
+        <Link href={'/menu'}>Menu</Link>
+        <Link href={'#about'}>About</Link>
+        <Link href={'#contact'}>Contact</Link>
         
       </nav>
       <nav className="flex items-center gap-4 text-gray-500 font-semibold">
@@ -52,6 +55,16 @@ export default function Header(){
            </>
         )
         }
+        {cartProducts?.length > 0 && (
+          <Link href={'/cart'}>
+            <ShoppingCart />
+              {cartProducts?.length > 0 && (
+                <span className="absolute top-3 right-48 bg-primary text-white text-xs py-1 px-1 rounded-full leading-3">
+                {cartProducts.length}
+            </span>
+            )}
+          </Link>
+        )}
       </nav>
     </header>
     </>

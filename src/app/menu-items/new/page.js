@@ -53,9 +53,16 @@ export default function NewMenuItem() {
         router.push('/menu-items'); // Use router.push for navigation
     }
 
+    if(loading){
+        return 'Loading Menu items form ....'
+    }
+    if(!data.admin){
+        return 'You are not an admin'
+    }
+
     return (
         <section className="mt-8">
-            <UserTabs />
+            <UserTabs isAdmin={data.admin} />
             <div className="max-w-2xl mx-auto mt-8">
                 <Link href={'/menu-items'} className="button">
                    <Left/>

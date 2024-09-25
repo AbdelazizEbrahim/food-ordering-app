@@ -1,8 +1,31 @@
+'use client'
+
 import Image from "next/image"
 import MenuItem from "../menu/menuItem"
 import SectionHeaders from "./sectionheaders"
+import { useState, useEffect } from "react"
 
 export default function HomeMenu(){
+    const [bestSellers, setBestSellers] = useState([])
+    useEffect(() => {
+        fetch('/api/menu-items')
+          .then(res => {
+            if (!res.ok) {
+              throw new Error('Failed to fetch menu items');
+            }
+            return res.json();
+          })
+          .then(MenuItems => {
+            setBestSellers(MenuItems.slice(-3)); // Get the last 3 items
+          })
+          .catch(error => {
+            console.error('Error fetching menu items:', error);
+          });
+      }, []);
+
+      console.log("best sellers: ", bestSellers);
+      
+
     return(
         <section className=''>
             <div className='absolute left-0 ring-0 w-full justify-center'>
@@ -17,16 +40,14 @@ export default function HomeMenu(){
             <div className='text-center mb-4'>
             <SectionHeaders 
             subHeader={'Check out'}
-            mainHeader={'Menu'}
+            mainHeader={'Best Sellers'}
             />
             </div>
             <div className='grid grid-cols-3 gap-4'>
-            <MenuItem/>
-            <MenuItem/>
-            <MenuItem/>
-            <MenuItem/>
-            <MenuItem/>
-            <MenuItem/>
+                {bestSellers?.length > 0 && bestSellers.map(item => (
+                    // eslint-disable-next-line react/jsx-key
+                    <MenuItem {...item}/>
+                ))}
             </div>
 
         </section>
