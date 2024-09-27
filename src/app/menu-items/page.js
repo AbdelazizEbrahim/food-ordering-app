@@ -1,10 +1,10 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { useProfile } from "../components/useProfile";
-import UserTabs from "../components/layout/userTabs";
+import { useProfile } from "../../components/useProfile";
+import UserTabs from "../../components/layout/userTabs";
 import Link from "next/link";
-import Right from "../components/icons/right";
+import Right from "../../components/icons/right";
 import Image from "next/image";
 
 
@@ -51,15 +51,21 @@ export default function MenuItemsPage() {
                         className=" rounded-lg p-4 bg-gray-200 flex-col" href={`/menu-items/edit/`+item._id}>
                         <div className="relative">
                             <Image 
-                               className='rounded-md'
-                               src={item.image} alt={''} width={200} height={200} />
+                                className='rounded-md object-cover'  // Use object-cover to maintain aspect ratio and cover the container
+                                src={item.image} 
+                                alt={''} 
+                                width={150} 
+                                height={150} 
+                                style={{ width: '180px', height: '180px' }}  // Ensure fixed dimensions
+                            />
                         </div>
+
                         <div className="text-center">
                             {item.itemName}
                         </div>
-                        {/* <div className="text-center mt-4">
-                            {item.description}
-                        </div> */}
+                        <div>
+                        <p className='text-gray-500 text-sm line-clamp-3 '>{item.description}</p>
+                        </div>
                     </Link>
                 ))}
                 </div>

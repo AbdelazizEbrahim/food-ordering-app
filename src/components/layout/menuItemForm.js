@@ -8,7 +8,8 @@ import toast from 'react-hot-toast';
 import MenuItemPriceProps from "./menuItemPriceProps";
 
 export default function MenuItemsForm({ onSubmit, menuItem }) {
-
+    console.log("menu item to updateeee: ", menuItem);
+    
     const [image1, setImage] = useState(null);
     const [load, setLoad] = useState(false);
     const [image, setImage1] = useState('');
@@ -17,7 +18,7 @@ export default function MenuItemsForm({ onSubmit, menuItem }) {
     const [itemName, setItemName] = useState('');
     const [sizes, setSizes] = useState([]);
     const [ingridients, setIngridients] = useState([]);
-    const [category, setCategory] = useState(menuItem?.category?._id || ''); // Ensure category ID is fetched correctly
+    const [category, setCategory] = useState(menuItem?.category || ''); // Assign category from menuItem
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
@@ -37,8 +38,14 @@ export default function MenuItemsForm({ onSubmit, menuItem }) {
             setImage1(menuItem.image || '');
             setPrice(menuItem.price || '');
             setDescription(menuItem.description || '');
-            setCategory(menuItem?.category?._id || ''); // Ensure category ID is set correctly
-            console.log("Category ID from menuItem:", menuItem?.category?._id); // Debug category ID
+            
+            // Ensure category ID is set correctly
+            if (menuItem?.category) {
+                setCategory(menuItem.category); // Assign category if it's not null
+            } else {
+                setCategory(''); // Reset category if it's null
+            }
+            console.log("Category ID from menuItem:", menuItem?.category); // Debug category ID
         }
     }, [menuItem]);
 
@@ -120,12 +127,14 @@ export default function MenuItemsForm({ onSubmit, menuItem }) {
                         className="block border border-gray-300 rounded-lg px-4 py-2 w-full"
                     />
                     <label>Description</label>
-                    <input
-                        type="text"
+                    <textarea
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         className="block border border-gray-300 rounded-lg px-4 py-2 w-full"
-                    />
+                        rows="3"    // Number of visible rows
+                        cols="3"    // Number of visible columns
+                    ></textarea>
+
                     <label>Category</label>
                     <select value={category} onChange={ev => {
                         setCategory(ev.target.value);
@@ -143,15 +152,18 @@ export default function MenuItemsForm({ onSubmit, menuItem }) {
                         onChange={(e) => setPrice(e.target.value)}
                         className="block border border-gray-300 rounded-lg px-4 py-2 w-full"
                     />
-                    <MenuItemPriceProps name={"Sizes"} 
-                                        addLabel={"Add item size"}
-                                        props={sizes} 
-                                        setProps={setSizes}/>
-
-                    <MenuItemPriceProps name={"Ingridients"} 
-                                        addLabel={"Add ingredient"}  
-                                        props={ingridients} 
-                                        setProps={setIngridients}/>
+                    <MenuItemPriceProps 
+                        name={"Sizes"} 
+                        addLabel={"Add item size"}
+                        props={sizes} 
+                        setProps={setSizes}
+                    />
+                    <MenuItemPriceProps 
+                        name={"Ingridients"} 
+                        addLabel={"Add ingredient"}  
+                        props={ingridients} 
+                        setProps={setIngridients}
+                    />
                     <button
                         type="submit"
                         className={`mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg ${load ? 'opacity-50 cursor-not-allowed' : ''}`}

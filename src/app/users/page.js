@@ -1,6 +1,6 @@
 'use client';
-import UserTabs from "../components/layout/userTabs";
-import { useProfile } from "../components/useProfile";
+import UserTabs from "../../components/layout/userTabs";
+import { useProfile } from "../../components/useProfile";
 import Link from "next/link";
 import {useEffect, useState} from "react";
 
@@ -17,7 +17,6 @@ export default function UsersPage() {
     })
   }, []);
 
-<<<<<<< HEAD
   if (loading) {
     return 'Loading user list...';
   }
@@ -25,7 +24,6 @@ export default function UsersPage() {
   if (!data.admin) {
     return 'You are Not an admin';
   }
-=======
   // if (loading) {
   //   return 'Loading user info...';
   // }
@@ -33,7 +31,6 @@ export default function UsersPage() {
   // if (!data.admin) {
   //   return 'Not an admin';
   // }
->>>>>>> a88840aae76b25c17c8f09491e63bcd31a0c8df8
 
   return (
     <section className="max-w-2xl mx-auto mt-8">

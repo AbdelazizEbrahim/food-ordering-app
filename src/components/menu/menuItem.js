@@ -19,6 +19,7 @@ export default function MenuItem(menuItem) {
         return;
        }
        addToCart(menuItem, selectedSize, selectedExtras);
+       console.log("selected sizzzzz: ", selectedSize);
        setPopUp(false);
        toast.success("Added to cart!");
     }
@@ -35,6 +36,7 @@ export default function MenuItem(menuItem) {
 
     let selectedPrice = Number(price); 
     if (selectedSize) {
+        console.log('selected size: ', selectedSize);
         selectedPrice += Number(selectedSize.price); 
     }
     if (selectedExtras.length > 0) {
@@ -48,11 +50,11 @@ export default function MenuItem(menuItem) {
             {popUp && (
                 <div 
                      onClick={() => setPopUp(false)}
-                     className="fixed inset-0 bg-black/80 flex items-center justify-center ">
+                     className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
                     <div
                         onClick={ev => ev.stopPropagation()} 
                         className="my-8 bg-white p-2 rounded-lg max-w-md ">
-                        <div className="overflow-y-scroll p-2" style={{ maxHeight: 'calc(100vh - 100px)' }}>
+                        <div className="overflow-y-scroll p-2 " style={{ maxHeight: 'calc(100vh - 100px)' }}>
                             <Image 
                                 src={image} 
                                 alt={itemName} 

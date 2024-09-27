@@ -1,7 +1,7 @@
 'use client';
-import UserForm from "@/app/components/layout/userForm";
-import UserTabs from "@/app/components/layout/userTabs";
-import { useProfile } from "@/app/components/useProfile";
+import UserForm from "@/components/layout/userForm";
+import UserTabs from "@/components/layout/userTabs";
+import { useProfile } from "@/components/useProfile";
 import {useParams} from "next/navigation";
 import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
@@ -59,7 +59,6 @@ export default function EditUserPage() {
   
   
 
-<<<<<<< HEAD
   if (loading) {
     return 'Loading Edit form...';
   }
@@ -67,7 +66,6 @@ export default function EditUserPage() {
   if (!data.admin) {
     return 'You are Not an admin';
   }
-=======
   // if (loading) {
   //   return 'Loading user profile...';
   // }
@@ -75,7 +73,6 @@ export default function EditUserPage() {
   // if (!data.admin) {
   //   return 'Not an admin';
   // }
->>>>>>> a88840aae76b25c17c8f09491e63bcd31a0c8df8
 
   return (
     <section className="mt-8 mx-auto max-w-2xl">

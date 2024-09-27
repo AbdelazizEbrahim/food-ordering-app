@@ -1,12 +1,12 @@
 'use client'
 
 import Link from "next/link";
-import Header from "./components/layout/header";
-import Hero from "./components/layout/hero";
-import HomeMenu from "./components/layout/homeMenu";
-import SectionHeaders from "./components/layout/sectionheaders";
+import Header from "../components/layout/header";
+import Hero from "../components/layout/hero";
+import HomeMenu from "../components/layout/homeMenu";
+import SectionHeaders from "../components/layout/sectionheaders";
 import { useEffect, useState } from "react";
-import MenuItem from "./components/menu/menuItem";
+import MenuItem from "../components/menu/menuItem";
 
 export default function Home() {
 

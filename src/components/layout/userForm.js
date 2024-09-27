@@ -5,6 +5,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { storage } from '@/libs/firebase';
 import toast from "react-hot-toast";
 import { useProfile } from "../useProfile";
+import AddressInputs from "./addressInputs";
 
 export default function UserForm({ user, onSave }) {
   const [userName, setUserName] = useState('');
@@ -20,6 +21,15 @@ export default function UserForm({ user, onSave }) {
   const [loading, setLoading] = useState(false);
   const [admin, setAdmin] = useState(false);
   const {data: loggedInUserData} = useProfile();
+
+  function handleAddressChange(propName, value){
+    console.log('name and value',  propName, value)
+    if (propName === 'phone') setPhone(value);
+    if (propName === 'streetAddress') setStreetAddress(value);
+    if (propName === 'postalCode') setPostalCode(value);
+    if (propName === 'city') setCity(value);
+    if (propName === 'country') setCountry(value);
+  }
 
   useEffect(() => {
     if (user && !isInitialized) {
@@ -131,7 +141,12 @@ export default function UserForm({ user, onSave }) {
             />
           </div>
 
-          <div>
+          <AddressInputs
+            addressProps={{phone, streetAddress, postalCode, city, country}}
+            setAddressProps={handleAddressChange}
+          />
+
+          {/* <div>
             <label>Phone</label>
             <input
               type="tel"
@@ -185,7 +200,7 @@ export default function UserForm({ user, onSave }) {
               onChange={(ev) => setCountry(ev.target.value)}
               className="block w-full border border-gray-300 rounded-lg px-4 py-2"
             />
-          </div>
+          </div> */}
           {loggedInUserData.admin && (
             <div>
             <label className="p-2 inline-flex items-center gap-2 mb-2"

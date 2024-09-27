@@ -1,11 +1,11 @@
 'use client'
 
-import UserTabs from "../components/layout/userTabs"
+import UserTabs from "../../components/layout/userTabs"
 import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react";
-import { useProfile } from "../components/useProfile";
+import { useProfile } from "../../components/useProfile";
 import toast from "react-hot-toast";
-import DeleteButton from "../components/DeleteButton";
+import DeleteButton from "../../components/DeleteButton";
 
 
 export default function CategoriesPage (){

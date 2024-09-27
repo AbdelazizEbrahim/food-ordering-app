@@ -1,16 +1,16 @@
 'use client'
 
 
-import { useProfile } from "@/app/components/useProfile";
+import { useProfile } from "@/components/useProfile";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation'; // Import useRouter
-import UserTabs from "@/app/components/layout/userTabs";
+import UserTabs from "@/components/layout/userTabs";
 import toast from 'react-hot-toast';
 import Link from "next/link";
-import Left from "@/app/components/icons/left";
+import Left from "@/components/icons/left";
 import { useParams } from "next/navigation";
-import MenuItemsForm from "@/app/components/layout/menuItemForm";
-import DeleteButton from "@/app/components/DeleteButton";
+import MenuItemsForm from "@/components/layout/menuItemForm";
+import DeleteButton from "@/components/DeleteButton";
 
 export default function EditMenuPage(){
     const {id} = useParams();
@@ -24,6 +24,7 @@ export default function EditMenuPage(){
           res.json().then(items => {
             const item = items?.find(i => i._id === id);
             setMenuItem(item);
+            console.log("menu item too update: ", item)
           });
         })
       }, []);

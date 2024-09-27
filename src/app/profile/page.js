@@ -3,8 +3,8 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from "react-hot-toast";
-import UserTabs from '../components/layout/userTabs';
-import UserForm from '../components/layout/userForm';
+import UserTabs from '../../components/layout/userTabs';
+import UserForm from '../../components/layout/userForm';
 
 export default function ProfilePage() {
     const { data: session, status } = useSession();    

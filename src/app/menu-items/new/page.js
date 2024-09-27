@@ -1,14 +1,14 @@
 'use client';
 
-import { useProfile } from "@/app/components/useProfile";
+import { useProfile } from "@/components/useProfile";
 import Link from "next/link";
 import { useRouter } from 'next/navigation'; // Import the useRouter hook
-import Left from "@/app/components/icons/left";
-import MenuItemsForm from "@/app/components/layout/menuItemForm";
+import Left from "@/components/icons/left";
+import MenuItemsForm from "@/components/layout/menuItemForm";
 import toast from 'react-hot-toast';
 import { useState } from "react";
 import { redirect } from "next/navigation";
-import UserTabs from "@/app/components/layout/userTabs";
+import UserTabs from "@/components/layout/userTabs";
 
 export default function NewMenuItem() {
 

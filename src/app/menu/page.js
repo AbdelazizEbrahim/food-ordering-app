@@ -1,8 +1,9 @@
+/* eslint-disable react/jsx-key */
 'use client'
 
-import SectionHeaders from "../components/layout/sectionheaders"
+import SectionHeaders from "../../components/layout/sectionheaders"
 import { useEffect, useState } from "react"
-import MenuItem from "../components/menu/menuItem";
+import MenuItem from "../../components/menu/menuItem";
 
 export default function MenuPage(){
     const [categories, setCategories] = useState([]);
