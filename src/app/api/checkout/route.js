@@ -53,7 +53,7 @@ export async function POST(req) {
     console.log("Order document created: ", orderDoc);
 
     let totalAmount = productsInfo.reduce((total, product) => total + product.price, 0); 
-    totalAmount += 50;
+    totalAmount += 50; // Adding a delivery fee
     console.log("Order total price: ", totalAmount);
 
     const [first_name, last_name] = address.name.split(" ");
@@ -67,15 +67,15 @@ export async function POST(req) {
         first_name,  
         last_name,   
         tx_ref: `tx-${orderDoc._id}`,  
-        callback_url: "https://webhook.site/your-callback-url",  
-        return_url: `http://localhost:3000/thankYou?order_id=${orderDoc._id}`,
+        callback_url: "https://718f-196-190-90-211.ngrok-free.app/api/webhook",
+        return_url: `http://localhost:3000/thankYou?order_id=${orderDoc._id}`, 
         customizations: {
             title: "Food Order Payment",
             description: "Payment for your order with delivery",
         },
     });
 
-    console.log("chapa full data: ", chapaData);
+    console.log("Chapa full data: ", chapaData);
 
     const chapaHeaders = {
         "Authorization": `Bearer ${process.env.CHAPA_SECRET_KEY}`,

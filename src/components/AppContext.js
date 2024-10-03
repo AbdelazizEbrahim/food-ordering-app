@@ -13,7 +13,7 @@ export function cartProductPrice(cartProduct) {
         price += Number(cartProduct.size.price); // Convert size price to a number
     }
 
-    if (cartProduct.extras.length > 0) {
+    if (cartProduct?.extras?.length > 0) {
         for (const extra of cartProduct.extras) {
             price += Number(extra.price); // Convert each extra price to a number
         }

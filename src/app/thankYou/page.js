@@ -25,17 +25,16 @@ const ThankYouPage = () => {
   const updateOrderToPaid = async (order_id) => {
     try {
       console.log("Updating order status to paid...");
-      const response = await fetch(`/api/orderUpdate`, {
+      const response = await fetch(`/api/orderUpdate?_id=${order_id}`, { // Passing _id as a query param
         method: 'PUT',
-        body: JSON.stringify({ _id: order_id, paid: true }),
+        body: JSON.stringify({ paid: true }), // Only 'paid' in the body
         headers: {
           'Content-Type': 'application/json',
         },
       });
-
-      // Check for response status
+  
       if (response.ok) {
-        window.location.href = '/orders'; // Redirect after success
+        window.location.href = `orders/` + order_id.toString() + '?clear-cart=1'; 
       } else {
         throw new Error('Failed to update payment status');
       }
@@ -43,13 +42,13 @@ const ThankYouPage = () => {
       console.error('Error updating payment status:', error);
       setPaymentStatus('failed');
     }
-  };
+  };  
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       {paymentStatus === 'pending' && (
         <div className="text-center">
-          <div className="loader"></div> {/* Circular spinner */}
+          <div className="loader"></div> 
           <h1 className="text-4xl font-bold mt-6">Payment Pending...</h1>
           <p className="mt-4 text-gray-600">Please wait while we confirm your payment.</p>
         </div>

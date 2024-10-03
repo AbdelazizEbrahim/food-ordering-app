@@ -1,64 +1,68 @@
-export default function AddressInputs({ addressProps, setAddressProps }) {
-    const { phone, streetAddress, postalCode, city, country } = addressProps;
-  
-    return (
-      <>
+export default function AddressInputs({ addressProps, setAddressProps, disabled = false }) {
+  const { phone, streetAddress, postalCode, city, country } = addressProps;
+
+  return (
+    <>
+      <div>
+        <label>Phone</label>
+        <input
+          disabled={disabled}
+          type="tel"
+          placeholder="Phone Number"
+          value={phone}
+          onChange={ev => !disabled && setAddressProps('phone', ev.target.value)}
+          className="block w-full border border-gray-300 rounded-lg px-4 py-2"
+        />
+      </div>
+
+      <div>
+        <label>Street Address</label>
+        <input
+          disabled={disabled}
+          type="text"
+          placeholder="Street Address"
+          value={streetAddress}
+          onChange={ev => !disabled && setAddressProps('streetAddress', ev.target.value)}
+          className="block w-full border border-gray-300 rounded-lg px-4 py-2"
+        />
+      </div>
+
+      <div className="flex gap-2">
         <div>
-          <label>Phone</label>
+          <label>Postal Code</label>
           <input
-            type="tel"
-            placeholder="Phone Number"
-            value={phone}
-            onChange={ev => setAddressProps('phone', ev.target.value)} // Correctly sets phone
-            className="block w-full border border-gray-300 rounded-lg px-4 py-2"
-          />
-        </div>
-  
-        <div>
-          <label>Street Address</label>
-          <input
+            disabled={disabled}
             type="text"
-            placeholder="Street Address"
-            value={streetAddress}
-            onChange={ev => setAddressProps('streetAddress', ev.target.value)} // Now sets streetAddress
+            placeholder="Postal Code"
+            value={postalCode}
+            onChange={ev => !disabled && setAddressProps('postalCode', ev.target.value)}
             className="block w-full border border-gray-300 rounded-lg px-4 py-2"
           />
         </div>
-  
-        <div className="flex gap-2">
-          <div>
-            <label>Postal Code</label>
-            <input
-              type="text"
-              placeholder="Postal Code"
-              value={postalCode}
-              onChange={ev => setAddressProps('postalCode', ev.target.value)} // Now sets postalCode
-              className="block w-full border border-gray-300 rounded-lg px-4 py-2"
-            />
-          </div>
-          <div>
-            <label>City</label>
-            <input
-              type="text"
-              placeholder="City"
-              value={city}
-              onChange={ev => setAddressProps('city', ev.target.value)} // Now sets city
-              className="block w-full border border-gray-300 rounded-lg px-4 py-2"
-            />
-          </div>
-        </div>
-  
         <div>
-          <label>Country</label>
+          <label>City</label>
           <input
+            disabled={disabled}
             type="text"
-            placeholder="Country"
-            value={country}
-            onChange={ev => setAddressProps('country', ev.target.value)} // Now sets country
+            placeholder="City"
+            value={city}
+            onChange={ev => !disabled && setAddressProps('city', ev.target.value)}
             className="block w-full border border-gray-300 rounded-lg px-4 py-2"
           />
         </div>
-      </>
-    );
-  }
-  
+      </div>
+
+      <div>
+        <label>Country</label>
+        <input
+          disabled={disabled}
+          type="text"
+          placeholder="Country"
+          value={country}
+          onChange={ev => !disabled && setAddressProps('country', ev.target.value)}
+          className="block w-full border border-gray-300 rounded-lg px-4 py-2"
+        />
+      </div>
+    </>
+  );
+}

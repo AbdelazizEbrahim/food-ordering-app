@@ -73,6 +73,14 @@ export default function CartPage() {
     });
   }
   
+  if (cartProducts?.length === 0) {
+    return(
+      <section className="mt-8 text-center">
+        <SectionHeaders mainHeader="Cart" />
+        <p className="mt-4">Your shopping cart is empty😒😒</p>
+      </section>
+    )
+  }
 
   return (
     <section className="mt-8">
@@ -147,7 +155,7 @@ export default function CartPage() {
           <form onSubmit={proceedToCheckout}>
             <AddressInputs
               addressProps={address}
-              setAddressProp={handleAddressChange}
+              setAddressProps={handleAddressChange}
             />
             <button type="submit">Pay Br. {subtotal + 50}</button>
           </form>
