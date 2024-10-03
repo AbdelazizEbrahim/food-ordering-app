@@ -18,15 +18,15 @@ export default function Header() {
   }
 
   return (
-    <header className="flex items-center justify-between py-4 px-6 bg-white shadow-md sticky top-0 z-30 overflow-y-hidden">
+<header className=" p-4 flex items-center justify-between h-16 px-6 bg-white shadow-md sticky top-0 z-30 overflow-y-hidden">
       <nav className="flex items-center gap-8 text-gray-500 font-semibold">
-        <Link className="text-primary font-semibold text-2xl" href="">
-          AMIFA
+        <Link className="text-primary font-semibold text-2xl" href="/">
+          LOGO
         </Link>
-        <Link href="/">Home</Link>
-        <Link href="/menu">Menu</Link>
-        <Link href="#about">About</Link>
-        <Link href="#contact">Contact</Link>
+        <Link className="hover:text-primary" href="/">Home</Link>
+        <Link className="hover:text-primary" href="/menu">Menu</Link>
+        <Link className="hover:text-primary" href="#about">About</Link>
+        <Link className="hover:text-primary" href="#contact">Contact</Link>
       </nav>
       <nav className="flex items-center gap-4 text-gray-500 font-semibold">
         {status === 'authenticated' && (
@@ -44,7 +44,7 @@ export default function Header() {
         )}
         {status === 'unauthenticated' && (
           <>
-            <Link href="/login" className="rounded-full px-4 py-2">
+            <Link href="/login" className="rounded-full px-4 py-2 hover:text-primary">
               Login
             </Link>
             <Link href="/register" className="bg-primary rounded-full text-white px-8 py-2">

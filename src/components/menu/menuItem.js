@@ -12,6 +12,8 @@ export default function MenuItem(menuItem) {
 
     const { addToCart } = useContext(CartContext);
 
+    console.log("purchased items: ", menuItem);
+
     function handleAddToCartButtonClick() {
        const hasOptions = sizes.length > 0 || ingridients.length > 0;
        if (hasOptions && !popUp ) {
@@ -57,7 +59,7 @@ export default function MenuItem(menuItem) {
                         <div className="overflow-y-scroll p-2 " style={{ maxHeight: 'calc(100vh - 100px)' }}>
                             <Image 
                                 src={image} 
-                                alt={itemName} 
+                                alt={"itemName"} 
                                 width={200} height={200} 
                                 className="mx-auto" 
                             />
