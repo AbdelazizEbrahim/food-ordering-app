@@ -88,7 +88,7 @@ export default function MenuItemsForm({ onSubmit, menuItem }) {
                 image, itemName, description, price, sizes, ingridients, category, // Pass category correctly
             });
         }}>
-            <div className="flex gap-4 items-start">
+            <div className="md:grid gap-4 items-start">
                 <div>
                     <div className="p-2 rounded-lg relative">
                         {image ? (
@@ -113,7 +113,7 @@ export default function MenuItemsForm({ onSubmit, menuItem }) {
                                 disabled={load} // Disable the input when uploading
                             />
                             <span className={`block border border-gray-300 rounded-lg px-8 text-center cursor-pointer py-2 ${load ? 'opacity-50 cursor-not-allowed' : ''}`}>
-                                Upload Image
+                                Edit Image
                             </span>
                         </label>
                     </div>

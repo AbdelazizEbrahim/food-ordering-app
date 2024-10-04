@@ -1,5 +1,6 @@
 import User from "@/models/User";
 import mongoose from "mongoose";
+import { isAdmin } from "../auth/[...nextauth]/route";
 
 export async function GET(request) {
   await mongoose.connect(process.env.MONGO_URL);
@@ -9,14 +10,9 @@ export async function GET(request) {
 
   let users;
   if (userId) {
-    // Fetch a specific user if the '_id' query parameter is provided
     users = await User.findById(userId);
-  } else {
-    // Fetch all users if no '_id' query parameter is provided
-    users = await User.find();
-  }
-
-  return new Response(JSON.stringify(users), {
-    headers: { 'Content-Type': 'application/json' },
-  });
+  } else if ( await isAdmin()) {
+      users = await User.find();
+  }  
+  return Response.json(users);
 }

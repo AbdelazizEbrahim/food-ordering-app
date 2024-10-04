@@ -2,11 +2,11 @@ import mongoose from "mongoose";
 import Order from "@/models/Order";
 import { getServerSession } from "next-auth";
 import User from "@/models/User";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions, isAdmin } from "../auth/[...nextauth]/route";
 
 export async function PUT(req) {
     const url = new URL(req.url);
-    const _id = url.searchParams.get('_id'); // Extract _id from the URL
+    const _id = url.searchParams.get('_id'); 
     const { paid } = await req.json();
     
     if (!_id || paid === undefined) {
@@ -38,7 +38,7 @@ export async function GET(req) {
     mongoose.connect(process.env.MONGO_URL);
     const session = await getServerSession(authOptions);
     const userEmail = session?.user?.email;
-    let isAdmin;
+    const admin = isAdmin();
 
     const url = new URL(req.url);
     const _id = url.searchParams.get('_id');
@@ -47,18 +47,11 @@ export async function GET(req) {
         return Response.json( await Order.findById(_id));
     }
 
-    if (userEmail) {
-        const userInfo = await User.findOne({email: userEmail});
-        if(userInfo) {
-            isAdmin = userInfo.admin;
-        }
-    }
-
-    if(isAdmin) {
-        return Response.json(await Order.findOne());
+    if(admin) {
+        return Response.json(await Order.find());
     }
 
     if(userEmail) {
-        return Response.json(await Order.find(userEmail))
+        return Response.json(await Order.find({userEmail}))
     }
 }

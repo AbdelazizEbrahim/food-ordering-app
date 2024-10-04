@@ -10,7 +10,7 @@ import { useContext, useEffect, useState } from "react";
 
 // CartProduct Component
 function CartProduct({ product, onRemove }) {
-//   console.log("product : ", product);
+  console.log("product : ", product);
   return (
     <div className="flex items-center gap-2 border-b grow py-4">
       <div className="w-24">
@@ -52,6 +52,7 @@ function CartProduct({ product, onRemove }) {
 
 export default function OrderPage() {
   const [order, setOrder] = useState({});
+  const [loadingOrder, setLoadingOrder] = useState(true);
   const { clearCart } = useContext(CartContext);
   const { id } = useParams();
   
@@ -66,21 +67,40 @@ export default function OrderPage() {
   const total = subtotal + deliveryFee;  
 
   useEffect(() => {
+    fetchingOrder();
+  }, []);
+
+  function fetchingOrder() {
+    setLoadingOrder(true);
     if (typeof window.console !== "undefined") {
       if (window.location.href.includes('clear-cart=1')) {
         clearCart();
       }
     }
-
+  
     if (id) {
-      fetch(`/api/orderUpdate?_id=` + id)
+      const controller = new AbortController();
+      fetch(`/api/orderUpdate?_id=` + id, { signal: controller.signal })
         .then(res => res.json())
         .then(orderData => {
-            console.log("order data: ", orderData);
+          console.log("order data: ", orderData);
           setOrder(orderData);
+          setLoadingOrder(false);
+        })
+        .catch(error => {
+          if (error.name === 'AbortError') {
+            console.log('Fetch aborted');
+          } else {
+            console.error('Fetch error:', error);
+          }
         });
+  
+      return () => {
+        controller.abort();
+      };
     }
-  }, [id, clearCart]);
+  }
+  
 
   return (
     <section className="max-w-2xl mx-auto text-center mt-8">
@@ -91,9 +111,11 @@ export default function OrderPage() {
           <p>We will call you when your order is on the way</p>
         </div>
       </div>
-
+      {loadingOrder && (
+        <div>Loading order ...</div>
+      )}
       {order && (
-        <div className="grid grid-cols-2 gap-16">
+        <div className=" grid md:grid-cols-2 md:gap-16">
           <div>
             {order.cartProducts?.map(product => (
               <CartProduct key={product._id} product={product} />

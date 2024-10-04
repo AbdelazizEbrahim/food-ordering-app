@@ -1,46 +1,45 @@
 import { MenuItem } from "@/models/MenuItem";
-import { NextResponse } from 'next/server';
 import mongoose from "mongoose";
+import { isAdmin } from "../auth/[...nextauth]/route";
 
 export async function POST(req) {
-    mongoose.connect(process.env.MONGO_URL);
+  await mongoose.connect(process.env.MONGO_URL);
     const data = await req.json();
-    console.log("posting .... ", data);
-    const menuItemDoc = await MenuItem.create(data);
-    if(menuItemDoc){
-      console.log("menu item: ", menuItemDoc);
+    if (await isAdmin()) {
+      const menuItemDoc = await MenuItem.create(data);
+      return Response.json(menuItemDoc);
+    } else {
+      return Response.json({});
     }
-    return Response.json(menuItemDoc);
+
 }
 
 export async function PUT(req) {
-  mongoose.connect(process.env.MONGO_URL);
-   const {_id, ...data} = await req.json();
-   console.log("Data to update: ", data);
-   const updateItem = await MenuItem.findByIdAndUpdate(_id, data, { new: true });
-  
-   if (updateItem) {
-      console.log("Updated menu item: ", updateItem);
+  await mongoose.connect(process.env.MONGO_URL);
+  if (await isAdmin()) {
+    const {_id, ...data} = await req.json();
+    const updateItem = await MenuItem.findByIdAndUpdate(_id, data, { new: true }); 
+    return Response.json(updateItem);
   } else {
-      console.log("No menu item found with this ID.");
+    return Response.json({})
   }
-  
-  return Response.json(updateItem);
 }
 
 
 export async function GET() {
-  mongoose.connect(process.env.MONGO_URL);
-  return Response.json(
-    await MenuItem.find()
-  );
+  await mongoose.connect(process.env.MONGO_URL);
+      return Response.json(
+      await MenuItem.find()
+    );
 }
 
 export async function  DELETE(req) {
-  mongoose.connect(process.env.MONGO_URL);
+  await mongoose.connect(process.env.MONGO_URL);
   const url = new URL(req.url);
   const _id = url.searchParams.get('_id');
-  await MenuItem.deleteOne({_id});
+  if(await isAdmin()) {
+    await MenuItem.deleteOne({_id});
+  }
   return Response.json(true);
 }
   

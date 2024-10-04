@@ -87,8 +87,8 @@ export default function CartPage() {
       <div className="text-center">
         <SectionHeaders mainHeader="Cart" />
       </div>
-      <div className="mt-8 grid gap-8 grid-cols-2">
-        <div>
+      <div className="mt-8 grid md:grid-cols-2 md:gap-16">
+       <div>
           {cartProducts?.length === 0 && (
             <div>No product in your cart list</div>
           )}

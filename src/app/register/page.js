@@ -41,7 +41,7 @@ export default function RegisterPage() {
     }
 
     return (
-        <section>
+        <section className="mt-16">
             <h1 className='text-center text-primary text-4xl mb-4'>
                 Register
             </h1>

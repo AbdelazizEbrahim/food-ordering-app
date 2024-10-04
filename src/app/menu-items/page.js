@@ -7,7 +7,6 @@ import Link from "next/link";
 import Right from "../../components/icons/right";
 import Image from "next/image";
 
-
 export default function MenuItemsPage() {
 
     const [menuItems, setMenuItems] = useState([]);
@@ -22,14 +21,12 @@ export default function MenuItemsPage() {
             });
     }, []);
     
-
     if(loading){
         return 'Loading Menu items list ....'
     }
     if(!data.admin){
         return 'You are not an admin'
     }
-
 
     return (
          <section className="mt-8 max-w-2xl mx-auto">
@@ -44,34 +41,34 @@ export default function MenuItemsPage() {
             </div>
             <div>
                 <h2 className="text-sm text-gray-500 mt-8">Edit Menu Item: </h2>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {menuItems?.length > 0 && menuItems.map(item => (
-                    // eslint-disable-next-line react/jsx-key
                     <Link 
-                        className=" rounded-lg p-4 bg-gray-200 flex-col" href={`/menu-items/edit/`+item._id}>
-                        <div className="relative">
+                        key={item._id}
+                        className="rounded-lg p-4 bg-gray-200 flex flex-col items-center" 
+                        href={`/menu-items/edit/${item._id}`}
+                    >
+                        <div className="flex justify-center mb-4">
                             <Image 
-                                className='rounded-md object-cover'  // Use object-cover to maintain aspect ratio and cover the container
+                                className='rounded-md object-cover'
                                 src={item.image} 
-                                alt={''} 
+                                alt={item.itemName} 
                                 width={150} 
                                 height={150} 
-                                style={{ width: '180px', height: '180px' }}  // Ensure fixed dimensions
+                                style={{ width: '180px', height: '180px' }}
                             />
                         </div>
 
-                        <div className="text-center">
+                        <div className="text-center font-semibold">
                             {item.itemName}
                         </div>
-                        <div>
-                        <p className='text-gray-500 text-sm line-clamp-3 '>{item.description}</p>
+                        <div className="mt-2">
+                            <p className='text-gray-500 text-sm line-clamp-3'>{item.description}</p>
                         </div>
                     </Link>
                 ))}
                 </div>
-
             </div>
-
          </section>
     );
 }

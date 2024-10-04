@@ -9,7 +9,7 @@ export async function POST(req) {
     await mongoose.connect(process.env.MONGO_URL);
 
     const { cartProducts, address } = await req.json();
-    console.log("Address: ", address);
+    console.log("Address: ", address, cartProducts);
     
     const session = await getServerSession(authOptions);
     const userEmail = session?.user?.email;
@@ -46,14 +46,14 @@ export async function POST(req) {
     const orderDoc = await Order.create({
         userEmail,
         ...address,
-        cartProducts: productsInfo,  
+        cartProducts,
         paid: false,
     });
 
     console.log("Order document created: ", orderDoc);
 
     let totalAmount = productsInfo.reduce((total, product) => total + product.price, 0); 
-    totalAmount += 50; // Adding a delivery fee
+    totalAmount += 50; 
     console.log("Order total price: ", totalAmount);
 
     const [first_name, last_name] = address.name.split(" ");

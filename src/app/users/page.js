@@ -24,13 +24,13 @@ export default function UsersPage() {
   if (!data.admin) {
     return 'You are Not an admin';
   }
-  // if (loading) {
-  //   return 'Loading user info...';
-  // }
+  if (loading) {
+    return 'Loading user info...';
+  }
 
-  // if (!data.admin) {
-  //   return 'Not an admin';
-  // }
+  if (!data.admin) {
+    return 'Not an admin';
+  }
 
   return (
     <section className="max-w-2xl mx-auto mt-8">
