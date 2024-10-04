@@ -6,6 +6,8 @@ import { storage } from '@/libs/firebase';
 import toast from "react-hot-toast";
 import { useProfile } from "../useProfile";
 import AddressInputs from "./addressInputs";
+import AOS from "aos";  // Import AOS
+import "aos/dist/aos.css";  // Import AOS styles
 
 export default function UserForm({ user, onSave }) {
   const [userName, setUserName] = useState('');
@@ -22,8 +24,7 @@ export default function UserForm({ user, onSave }) {
   const [admin, setAdmin] = useState(false);
   const {data: loggedInUserData} = useProfile();
 
-  function handleAddressChange(propName, value){
-    console.log('name and value',  propName, value)
+  function handleAddressChange(propName, value) {
     if (propName === 'phone') setPhone(value);
     if (propName === 'streetAddress') setStreetAddress(value);
     if (propName === 'postalCode') setPostalCode(value);
@@ -32,8 +33,8 @@ export default function UserForm({ user, onSave }) {
   }
 
   useEffect(() => {
+    AOS.init({ duration: 1000 });  // Initialize AOS
     if (user && !isInitialized) {
-      console.log("user data: ", user);
       setUserName(user.name || '');
       setImageUrl(user.image || '');
       setPhone(user.phone || '');
@@ -43,7 +44,7 @@ export default function UserForm({ user, onSave }) {
       setPostalCode(user.postalCode || '');
       setCity(user.city || '');
       setCountry(user.country || '');
-      setIsInitialized(true); // Prevent further updates
+      setIsInitialized(true); 
     }
   }, [user, isInitialized]);
 
@@ -81,7 +82,7 @@ export default function UserForm({ user, onSave }) {
     ev.preventDefault();
 
     const updatedData = {
-      _id: user?._id || undefined,  // Include the _id if it's available
+      _id: user?._id || undefined, 
       name: userName,
       image: imageUrl,
       phone,
@@ -91,14 +92,13 @@ export default function UserForm({ user, onSave }) {
       country,
       admin,
     };
-    console.log("returned data:", updatedData);
 
     onSave(ev, updatedData);  
   };
 
   return (
     <div className="md:flex gap-4 items-start">
-      <div className="flex-shrink-0 p-2 rounded-lg relative max-w-[120px]">
+      <div className="flex-shrink-0 p-2 rounded-lg relative max-w-[120px]" data-aos="fade-right">
         <Image
           className="rounded-lg w-full h-full mb-1"
           src={imageUrl || '/user.png'}
@@ -118,7 +118,7 @@ export default function UserForm({ user, onSave }) {
         </label>
       </div>
 
-      <form onSubmit={handleSubmit} className="grow">
+      <form onSubmit={handleSubmit} className="grow" data-aos="fade-up">
         <div className="grid grid-cols-1 gap-4">
           <div>
             <label>Full Name</label>
@@ -146,77 +146,23 @@ export default function UserForm({ user, onSave }) {
             setAddressProps={handleAddressChange}
           />
 
-          {/* <div>
-            <label>Phone</label>
-            <input
-              type="tel"
-              placeholder="Phone Number"
-              value={phone}
-              onChange={(ev) => setPhone(ev.target.value)}
-              className="block w-full border border-gray-300 rounded-lg px-4 py-2"
-            />
-          </div>
-
-          <div>
-            <label>Street Address</label>
-            <input
-              type="text"
-              placeholder="Street Address"
-              value={streetAddress}
-              onChange={(ev) => setStreetAddress(ev.target.value)}
-              className="block w-full border border-gray-300 rounded-lg px-4 py-2"
-            />
-          </div>
-
-          <div className="flex gap-2">
-            <div>
-              <label>Postal Code</label>
-              <input
-                type="text"
-                placeholder="Postal Code"
-                value={postalCode}
-                onChange={(ev) => setPostalCode(ev.target.value)}
-                className="block w-full border border-gray-300 rounded-lg px-4 py-2"
-              />
-            </div>
-            <div>
-              <label>City</label>
-              <input
-                type="text"
-                placeholder="City"
-                value={city}
-                onChange={(ev) => setCity(ev.target.value)}
-                className="block w-full border border-gray-300 rounded-lg px-4 py-2"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label>Country</label>
-            <input
-              type="text"
-              placeholder="Country"
-              value={country}
-              onChange={(ev) => setCountry(ev.target.value)}
-              className="block w-full border border-gray-300 rounded-lg px-4 py-2"
-            />
-          </div> */}
           {loggedInUserData.admin && (
             <div>
-            <label className="p-2 inline-flex items-center gap-2 mb-2"
-              htmlFor="adminCb">
+              <label className="p-2 inline-flex items-center gap-2 mb-2"
+                htmlFor="adminCb">
                 <input id="adminCb" type="checkbox" className="" value={'1'}
-                    checked={admin}
-                    onClick={ev => setAdmin(ev.target.checked)}/>
+                  checked={admin}
+                  onClick={ev => setAdmin(ev.target.checked)} />
                 <span> Admin </span>
               </label>
-          </div>
+            </div>
           )}
         </div>
 
         <button
           type="submit"
           className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg"
+          data-aos="fade-up"
         >
           Save Profile
         </button>

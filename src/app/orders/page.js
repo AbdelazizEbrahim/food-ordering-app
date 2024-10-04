@@ -1,10 +1,12 @@
-'use client'
+'use client';
 
 import UserTabs from "@/components/layout/userTabs";
 import { useProfile } from "@/components/useProfile";
 import dbTimeToHuman from "@/libs/dataAndTime";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import AOS from 'aos'; // Import AOS
+import 'aos/dist/aos.css'; // Import AOS styles
 
 export default function OrdersPage() {
     const [orders, setOrders] = useState([]);
@@ -12,6 +14,7 @@ export default function OrdersPage() {
     const { loading, data: profile } = useProfile();
 
     useEffect(() => {
+        AOS.init({ duration: 1000 }); // Initialize AOS
         fetchOrders();
     }, []);
 
@@ -22,8 +25,8 @@ export default function OrdersPage() {
         .then(orders => {
             console.log(orders);
             setOrders(orders.reverse());
+            setOrderLoading(false);
         });
-        setOrderLoading(false);
     }
 
     return (
@@ -34,17 +37,21 @@ export default function OrdersPage() {
             )}
             <div className="mt-8">
                 {orders?.length > 0 && orders.map(order => (
-                    <div key={order._id} className="bg-gray-100 mb-2 p-4 rounded-lg flex flex-col md:flex-row items-center gap-6">
+                    <div 
+                        key={order._id} 
+                        className="bg-gray-100 mb-2 p-4 rounded-lg flex flex-col md:flex-row items-center gap-6"
+                        data-aos="fade-up" // Add AOS animation here
+                    >
                         <div className="grow flex flex-col md:flex-row items-center gap-6">
                             <div>
-                            <div className={`${order.paid ? 'bg-green-500' : 'bg-red-500'} p-2 rounded-md text-center w-24 text-white`}>
+                                <div className={`${order.paid ? 'bg-green-500' : 'bg-red-500'} p-2 rounded-md text-center w-24 text-white`}>
                                     {order.paid ? 'Paid' : 'Not Paid'}
-                             </div>
+                                </div>
                             </div>
                             <div className="grow">
                                 <div className="flex gap-2 items-center mb-1">
-                                   <div className="grow">{order.userEmail}</div>
-                                   <div className="text-gray-500  text-sm">{dbTimeToHuman(order.createdAt)}</div>
+                                    <div className="grow">{order.userEmail}</div>
+                                    <div className="text-gray-500 text-sm">{dbTimeToHuman(order.createdAt)}</div>
                                 </div>
                                 <div className="text-gray-500 text-sm">
                                     {order.cartProducts.map(p => p.itemName).join(', ')}

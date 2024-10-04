@@ -6,9 +6,10 @@ import { useRouter } from 'next/navigation'; // Import the useRouter hook
 import Left from "@/components/icons/left";
 import MenuItemsForm from "@/components/layout/menuItemForm";
 import toast from 'react-hot-toast';
-import { useState } from "react";
-import { redirect } from "next/navigation";
+import { useState, useEffect } from "react";
 import UserTabs from "@/components/layout/userTabs";
+import AOS from 'aos'; // Import AOS
+import 'aos/dist/aos.css'; // Import AOS CSS
 
 export default function NewMenuItem() {
 
@@ -17,6 +18,11 @@ export default function NewMenuItem() {
     const [load, setLoad] = useState(false);
     const [menuItemId, setMenuItemId] = useState(null);
 
+    // Initialize AOS
+    useEffect(() => {
+        AOS.init({ duration: 1000 }); // Set duration of the animation
+    }, []);
+
     if (loading) {
         return 'Loading user data...';
     }
@@ -24,7 +30,6 @@ export default function NewMenuItem() {
     async function handleSubmit(event, formData) {
         setLoad(true);
         event.preventDefault();
-        
         
         const savingPromise = new Promise(async (resolve, reject) => {
             const response = await fetch('/api/menu-items', {
@@ -53,23 +58,26 @@ export default function NewMenuItem() {
         router.push('/menu-items'); // Use router.push for navigation
     }
 
-    if(loading){
-        return 'Loading Menu items form ....'
+    if (loading) {
+        return 'Loading Menu items form...';
     }
-    if(!data.admin){
-        return 'You are not an admin'
+    
+    if (!data.admin) {
+        return 'You are not an admin';
     }
 
     return (
-        <section className="mt-8">
+        <section className="mt-8" data-aos="fade-in"> {/* AOS applied to the section */}
             <UserTabs isAdmin={data.admin} />
-            <div className="max-w-2xl mx-auto mt-8">
+            <div className="max-w-2xl mx-auto mt-8" data-aos="fade-right"> {/* AOS applied to the link */}
                 <Link href={'/menu-items'} className="button">
-                   <Left/>
-                   <span>Show all menu items</span>
+                    <Left />
+                    <span>Show all menu items</span>
                 </Link>
             </div>
-            <MenuItemsForm onSubmit={handleSubmit} menuItem={null} />
+            <div data-aos="fade-up"> {/* AOS applied to the form */}
+                <MenuItemsForm onSubmit={handleSubmit} menuItem={null} />
+            </div>
         </section>
     );
 }

@@ -12,8 +12,6 @@ export default function MenuItem(menuItem) {
 
     const { addToCart } = useContext(CartContext);
 
-    console.log("purchased items: ", menuItem);
-
     function handleAddToCartButtonClick() {
        const hasOptions = sizes.length > 0 || ingridients.length > 0;
        if (hasOptions && !popUp ) {
@@ -21,7 +19,6 @@ export default function MenuItem(menuItem) {
         return;
        }
        addToCart(menuItem, selectedSize, selectedExtras);
-       console.log("selected sizzzzz: ", selectedSize);
        setPopUp(false);
        toast.success("Added to cart!");
     }
@@ -38,7 +35,6 @@ export default function MenuItem(menuItem) {
 
     let selectedPrice = Number(price); 
     if (selectedSize) {
-        console.log('selected size: ', selectedSize);
         selectedPrice += Number(selectedSize.price); 
     }
     if (selectedExtras.length > 0) {
@@ -52,7 +48,7 @@ export default function MenuItem(menuItem) {
             {popUp && (
                 <div 
                      onClick={() => setPopUp(false)}
-                     className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+                     className="fixed inset-0 bg-black/80 flex items-center justify-center  ">
                     <div
                         onClick={ev => ev.stopPropagation()} 
                         className="my-8 bg-white p-2 rounded-lg max-w-md ">

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Trash from "@/components/icons/Trash";
 import Image from "next/image";
@@ -7,12 +7,14 @@ import AddressInputs from "@/components/layout/addressInputs";
 import SectionHeaders from "@/components/layout/sectionheaders";
 import { useParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
+import AOS from 'aos'; // Import AOS
+import 'aos/dist/aos.css'; // Import AOS styles
 
 // CartProduct Component
 function CartProduct({ product, onRemove }) {
   console.log("product : ", product);
   return (
-    <div className="flex items-center gap-2 border-b grow py-4">
+    <div className="flex items-center gap-2 border-b grow py-4" data-aos="fade-up"> {/* Add AOS animation here */}
       <div className="w-24">
         <Image
           width={100}
@@ -67,6 +69,7 @@ export default function OrderPage() {
   const total = subtotal + deliveryFee;  
 
   useEffect(() => {
+    AOS.init({ duration: 1000 }); // Initialize AOS
     fetchingOrder();
   }, []);
 
@@ -115,7 +118,7 @@ export default function OrderPage() {
         <div>Loading order ...</div>
       )}
       {order && (
-        <div className=" grid md:grid-cols-2 md:gap-16">
+        <div className="grid md:grid-cols-2 md:gap-16">
           <div>
             {order.cartProducts?.map(product => (
               <CartProduct key={product._id} product={product} />
@@ -136,7 +139,7 @@ export default function OrderPage() {
             </div>
           </div>
           <div>
-            <div className="bg-gray-100 p-4 rounded-lg">
+            <div className="bg-gray-100 p-4 rounded-lg" data-aos="fade-up"> {/* Add AOS animation here */}
               <AddressInputs disabled={true} addressProps={order} />
             </div>
           </div>

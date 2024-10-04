@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@auth/mongodb-adapter": "^3.4.2",
+    "aos": "^2.3.4",
     "bcrypt": "^5.1.1",
     "chapa": "^1.0.5",
     "firebase": "^10.13.1",
@@ -30,6 +31,7 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
+    "@types/aos": "^3.0.7",
     "@types/bcrypt": "^5.0.2",
     "@types/formidable": "^3.4.5",
     "@types/react": "^18.3.5",

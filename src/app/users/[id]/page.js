@@ -2,35 +2,34 @@
 import UserForm from "@/components/layout/userForm";
 import UserTabs from "@/components/layout/userTabs";
 import { useProfile } from "@/components/useProfile";
-import {useParams} from "next/navigation";
-import {useEffect, useState} from "react";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import AOS from 'aos'; // Import AOS
+import 'aos/dist/aos.css'; // Import AOS styles
 
 export default function EditUserPage() {
-  const {loading, data} = useProfile();
+  const { loading, data } = useProfile();
   const [user, setUser] = useState(null);
-  const {id} = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
-    console.log("idd: ", id);
+    // Initialize AOS
+    AOS.init({ duration: 1000 });
+
     fetch('/api/profile?_id=' + id)
-      .then(res => {
-        // console.log("Response object:", res); 
-        return res.json();
-      })
+      .then(res => res.json())
       .then(user => {
         setUser(user);
-        // console.log("Parsed user data:", user); 
       })
       .catch(error => {
-        console.error("Fetch error:", error); 
+        console.error("Fetch error:", error);
       });
-  }, [id]); 
+  }, [id]);
 
   async function handleSaveButtonClick(ev, data) {
     ev.preventDefault();
   
-    console.log("updating data: ", data);
     const { _id, ...dataToUpdate } = data;  
     const promise = new Promise(async (resolve, reject) => {
       try {
@@ -57,25 +56,16 @@ export default function EditUserPage() {
     });
   }
   
-  
-
   if (loading) {
-    return 'Loading Edit form...';
+    return 'Loading user profile...';
   }
 
   if (!data.admin) {
-    return 'You are Not an admin';
+    return 'Not an admin';
   }
-  // if (loading) {
-  //   return 'Loading user profile...';
-  // }
-
-  // if (!data.admin) {
-  //   return 'Not an admin';
-  // }
 
   return (
-    <section className="mt-8 mx-auto max-w-2xl">
+    <section className="mt-8 mx-auto max-w-2xl" data-aos="fade-up"> {/* Add AOS animation here */}
       <UserTabs isAdmin={true} />
       <div className="mt-8">
         <UserForm user={user} onSave={handleSaveButtonClick} />

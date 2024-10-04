@@ -8,6 +8,8 @@ import { useProfile } from "@/components/useProfile";
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import AOS from 'aos'; // Import AOS
+import 'aos/dist/aos.css'; // Import AOS styles
 
 export default function CartPage() {
   const { cartProducts, removeCartProduct } = useContext(CartContext);
@@ -15,6 +17,7 @@ export default function CartPage() {
   const { data: profileData } = useProfile();
 
   useEffect(() => {
+    AOS.init(); // Initialize AOS
     if (profileData?.city) {
       console.log("profile data: ", profileData);
       const { name, phone, streetAddress, city, postalCode, country } = profileData;
@@ -94,7 +97,12 @@ export default function CartPage() {
           )}
           {cartProducts.length > 0 &&
             cartProducts.map((product, index) => (
-              <div className="flex items-center gap-2 border-b grow py-4">
+              <div 
+                className="flex items-center gap-2 border-b grow py-4"
+                data-aos="fade-up" // Add AOS attributes
+                data-aos-duration="300" // Set duration
+                key={index} // Ensure you have a key for each item
+              >
                 <div className="w-24">
                   <Image
                     width={100}
@@ -116,7 +124,7 @@ export default function CartPage() {
                   {product.extras?.length > 0 && (
                     <div className="text-sm text-gray-500">
                       {product.extras.map((extra) => (
-                        <div>
+                        <div key={extra.name}>
                           Extra {extra.name}: Br.{extra.price}
                         </div>
                       ))}
@@ -137,6 +145,7 @@ export default function CartPage() {
                 </div>
               </div>
             ))}
+
           <div className="py-2  pr-16 flex justify-end font-semibold items-center">
             <div className="text-gray-500">
               Subtotal: <br />

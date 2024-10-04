@@ -88,8 +88,8 @@ export default function MenuItemsForm({ onSubmit, menuItem }) {
                 image, itemName, description, price, sizes, ingridients, category, // Pass category correctly
             });
         }}>
-            <div className="md:grid gap-4 items-start">
-                <div>
+            <div className="grid md:flex gap-4 items-start">
+                <div data-aos="fade-right"> {/* AOS animation */}
                     <div className="p-2 rounded-lg relative">
                         {image ? (
                             <Image
@@ -118,7 +118,7 @@ export default function MenuItemsForm({ onSubmit, menuItem }) {
                         </label>
                     </div>
                 </div>
-                <div className="grow">
+                <div className="grow" data-aos="fade-left"> {/* AOS animation */}
                     <label>Item Name</label>
                     <input
                         type="text"

@@ -2,19 +2,25 @@
 import UserTabs from "../../components/layout/userTabs";
 import { useProfile } from "../../components/useProfile";
 import Link from "next/link";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export default function UsersPage() {
 
   const [users, setUsers] = useState([]);
-  const {loading,data} = useProfile();
+  const { loading, data } = useProfile();
 
   useEffect(() => {
+    // Initialize AOS
+    AOS.init({ duration: 1000 });
+
+    // Fetch users
     fetch('/api/users').then(response => {
       response.json().then(users => {
         setUsers(users);
       });
-    })
+    });
   }, []);
 
   if (loading) {
@@ -24,6 +30,7 @@ export default function UsersPage() {
   if (!data.admin) {
     return 'You are Not an admin';
   }
+
   if (loading) {
     return 'Loading user info...';
   }
@@ -39,7 +46,9 @@ export default function UsersPage() {
         {users?.length > 0 && users.map(user => (
           <div
             key={user._id}
-            className="bg-gray-100 rounded-lg mb-2 p-1 px-4 flex items-center gap-4">
+            className="bg-gray-100 rounded-lg mb-2 p-1 px-4 flex items-center gap-4"
+            data-aos="fade-up"  // AOS animation
+          >
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 grow">
               <div className="text-gray-900">
                 {!!user.name && (<span>{user.name}</span>)}
@@ -48,7 +57,7 @@ export default function UsersPage() {
               <span className="text-gray-500">{user.email}</span>
             </div>
             <div>
-              <Link className="button" href={'/users/'+user._id}>
+              <Link className="button" href={'/users/' + user._id}>
                 Edit
               </Link>
             </div>

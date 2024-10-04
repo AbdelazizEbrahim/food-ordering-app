@@ -1,5 +1,4 @@
-'use client'
-
+'use client';
 
 import { useProfile } from "@/components/useProfile";
 import { useEffect, useState } from "react";
@@ -11,76 +10,31 @@ import Left from "@/components/icons/left";
 import { useParams } from "next/navigation";
 import MenuItemsForm from "@/components/layout/menuItemForm";
 import DeleteButton from "@/components/DeleteButton";
+import AOS from 'aos'; // Import AOS
+import 'aos/dist/aos.css'; // Import AOS styles
 
-export default function EditMenuPage(){
-    const {id} = useParams();
+export default function EditMenuPage() {
+    const { id } = useParams();
     const router = useRouter();
-    const {loading, data} = useProfile();
+    const { loading, data } = useProfile();
     const [load, setLoad] = useState(false);
     const [menuItem, setMenuItem] = useState(null);
+
+    // Initialize AOS
+    useEffect(() => {
+        AOS.init({ duration: 1000 }); // Initialize AOS with a 1000ms animation duration
+    }, []);
 
     useEffect(() => {
         fetch('/api/menu-items').then(res => {
           res.json().then(items => {
             const item = items?.find(i => i._id === id);
             setMenuItem(item);
-            console.log("menu item too update: ", item)
+            console.log("Menu item to update: ", item);
           });
-        })
-      }, []);
+        });
+    }, [id]);
     
-    
-
-    // if (loading) {
-    //     return 'Loading users data ....';
-    // }
-
-    // function handleFileChange(ev) {
-    //     const file = ev.target.files[0];
-    //     console.log('File selected: ', file);
-    //     if (file) {
-    //         setImage(file); 
-    //         handleUpload(file); 
-    //     } else {
-    //         console.log('No file selected');
-    //     }
-    // }
-
-    // async function handleUpload(file) {
-    //     setLoad(true);
-    //     const uploadPromise = new Promise(async (resolve, reject) => {
-    //         console.log("Image received: ", file);
-
-    //         if (!file) {
-    //             console.log("No file provided for upload.");
-    //             reject(new Error("No file provided"));
-    //             return;
-    //         }
-
-    //         try {
-    //             const fileRef = ref(storage, `images/${file.name}`);
-    //             const uploadTask = await uploadBytesResumable(fileRef, file);
-    //             const downloadUrl = await getDownloadURL(uploadTask.ref);
-
-    //             console.log("Download URL received: ", downloadUrl);
-
-    //             // await updateMenuItem(downloadUrl);
-    //             setImageUrl(downloadUrl);
-    //             setLoad(false);
-    //             resolve(); // Resolve the promise
-    //         } catch (error) {
-    //             console.error("Error during file upload: ", error);
-    //             reject(error);
-    //         }
-    //     });
-
-    //     await toast.promise(uploadPromise, {
-    //         loading: "Uploading ...",
-    //         success: "Upload completed!",
-    //         error: "Upload error"
-    //     });
-    // }
-
     async function handleDeleteClick() {    
         const promise = new Promise(async (resolve, reject) => {
             const res = await fetch('/api/menu-items?_id=' + id, {
@@ -135,40 +89,39 @@ export default function EditMenuPage(){
             toast.error('Unexpected error');
             setLoad(false);
         }
-    
     }
-    
 
-    // const userImage = imageUrl || '/user.png'; // Show the uploaded image or a placeholder
-
-    if(loading){
-        return 'Loading menu item edit form ....'
+    if (loading) {
+        return 'Loading menu item edit form...';
     }
-    if(!data.admin){
-        return 'You are not an admin'
+
+    if (!data.admin) {
+        return 'You are not an admin';
     }
 
     return (
-        <section className="mt-8">
-        <UserTabs isAdmin={true} />
-        <div className="max-w-2xl mx-auto mt-8">
-            <Link href={'/menu-items'} className="button">
-               <Left/>
-               <span>Show all menu items</span>
-            </Link>
-        </div>
-        <MenuItemsForm 
-            onSubmit={handleSubmit} 
-            menuItem={menuItem} 
-        />
-         <div className="max-w-md mx-auto mt-2">
-            <div className="max-w-xs ml-auto pl-4">
-            <DeleteButton
-                label="Delete this menu item"
-                onDelete={handleDeleteClick}
-            />
+        <section className="mt-8" data-aos="fade-in"> {/* AOS applied to the section */}
+            <UserTabs isAdmin={true} />
+            <div className="max-w-2xl mx-auto mt-8" data-aos="fade-right"> {/* AOS applied to the link */}
+                <Link href={'/menu-items'} className="button">
+                    <Left />
+                    <span>Show all menu items</span>
+                </Link>
             </div>
-        </div>
-    </section>
-    )
+            <div data-aos="fade-up"> {/* AOS applied to the form */}
+                <MenuItemsForm 
+                    onSubmit={handleSubmit} 
+                    menuItem={menuItem} 
+                />
+            </div>
+            <div className="max-w-md mx-auto mt-2" data-aos="fade-left"> {/* AOS applied to the delete button */}
+                <div className="max-w-xs ml-auto pl-4">
+                    <DeleteButton
+                        label="Delete this menu item"
+                        onDelete={handleDeleteClick}
+                    />
+                </div>
+            </div>
+        </section>
+    );
 }

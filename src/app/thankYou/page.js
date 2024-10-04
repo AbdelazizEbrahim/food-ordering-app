@@ -1,12 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import AOS styles
 
 const ThankYouPage = () => {
   const [paymentStatus, setPaymentStatus] = useState('pending');
   const [orderId, setOrderId] = useState(null);
 
   useEffect(() => {
+    // Initialize AOS
+    AOS.init();
+    
     // Extract order_id from the URL
     const params = new URLSearchParams(window.location.search);
     const order_id = params.get('order_id');
@@ -47,14 +52,14 @@ const ThankYouPage = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       {paymentStatus === 'pending' && (
-        <div className="text-center">
+        <div className="text-center" data-aos="fade-up" data-aos-duration="1000">
           <div className="loader"></div> 
           <h1 className="text-4xl font-bold mt-6">Payment Pending...</h1>
           <p className="mt-4 text-gray-600">Please wait while we confirm your payment.</p>
         </div>
       )}
       {paymentStatus === 'failed' && (
-        <div className="text-center">
+        <div className="text-center" data-aos="fade-down" data-aos-duration="1000">
           <h1 className="text-4xl font-bold text-red-600">Payment Failed</h1>
           <p className="mt-4 text-gray-600">There was an issue with your payment. Please try again.</p>
         </div>
