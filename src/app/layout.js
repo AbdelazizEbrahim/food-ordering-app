@@ -21,9 +21,83 @@ export default function RootLayout({ children }) {
             <Toaster />
             <Header className='mb-20 mr-5' />
             {children}
-            <footer className="border-t p-8 text-center text-gray-500 mt-16">
-              &copy; 2023 All rights reserved
-            </footer>
+            <footer className="border-t p-8 mt-16 bg-gray-100">
+  <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-gray-500">
+    {/* Socials Column */}
+    <div>
+      <h3 className="font-semibold mb-4">Socials</h3>
+      <ul className="space-y-2">
+        <li>
+          <a href="https://facebook.com" className="flex items-center">
+            <i className="fab fa-facebook mr-2"></i>
+            Facebook
+          </a>
+        </li>
+        <li>
+          <a href="https://tiktok.com" className="flex items-center">
+            <i className="fab fa-tiktok mr-2"></i>
+            TikTok
+          </a>
+        </li>
+        <li>
+          <a href="https://telegram.org" className="flex items-center">
+            <i className="fab fa-telegram mr-2"></i>
+            Telegram
+          </a>
+        </li>
+        <li>
+          <a href="https://youtube.com" className="flex items-center">
+            <i className="fab fa-youtube mr-2"></i>
+            YouTube
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    {/* Links Column */}
+    <div>
+      <h3 className="font-semibold mb-4">Links</h3>
+      <ul className="space-y-2">
+        <li>
+          <a href="#about" className="hover:underline">About Us</a>
+        </li>
+        <li>
+          <a href="#services" className="hover:underline">Services</a>
+        </li>
+        <li>
+          <a href="#contact" className="hover:underline">Contact</a>
+        </li>
+        <li>
+          <a href="#faq" className="hover:underline">FAQ</a>
+        </li>
+      </ul>
+    </div>
+
+    {/* Visit Column */}
+    <div>
+      <h3 className="font-semibold mb-4">Visit</h3>
+      <ul className="space-y-2">
+        <li>
+          <a href="#terms" className="hover:underline">Terms of Service</a>
+        </li>
+        <li>
+          <a href="#privacy" className="hover:underline">Privacy Policy</a>
+        </li>
+        <li>
+          <a href="#blog" className="hover:underline">Blog</a>
+        </li>
+        <li>
+          <a href="#help" className="hover:underline">Help Center</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div className="text-center text-gray-500 mt-8">
+    &copy; 2023 All rights reserved
+  </div>
+</footer>
+
           </AppProvider>
         </main>
       </body>

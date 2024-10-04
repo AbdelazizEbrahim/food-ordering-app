@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@auth/mongodb-adapter": "^3.4.2",
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-brands-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "aos": "^2.3.4",
     "bcrypt": "^5.1.1",
     "chapa": "^1.0.5",
