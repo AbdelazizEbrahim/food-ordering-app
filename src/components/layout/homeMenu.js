@@ -33,15 +33,6 @@ export default function HomeMenu() {
 
     return (
         <section>
-            <div className='absolute left-0 ring-0 w-full justify-center' data-aos="fade-up">
-                <div className='absolute left-0 -top-[50px] text-left -z-10' data-aos="fade-right" data-aos-delay="100">
-                    <Image src={'/salad.jpg'} width={109} height={189} alt={'salad'}/>
-                </div>
-                <div className='absolute -top-[70px] right-0 -z-10' data-aos="fade-left" data-aos-delay="200">
-                    <Image src={'/salad.jpg'} alt={"salad"} width={109} height={189}/>
-                </div>
-            </div>
-
             <div className='text-center mb-4' data-aos="fade-up" data-aos-delay="300">
                 <SectionHeaders 
                   subHeader='Check out'

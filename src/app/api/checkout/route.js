@@ -50,16 +50,10 @@ export async function POST(req) {
         paid: false,
     });
 
-    console.log("Order document created: ", orderDoc);
-
     let totalAmount = productsInfo.reduce((total, product) => total + product.price, 0); 
     totalAmount += 50; 
-    console.log("Order total price: ", totalAmount);
 
     const [first_name, last_name] = address.name.split(" ");
-    console.log("First Name: ", first_name);
-    console.log("Last Name: ", last_name);
-
     const chapaData = JSON.stringify({
         amount: totalAmount, 
         currency: "ETB",
@@ -68,7 +62,7 @@ export async function POST(req) {
         last_name,   
         tx_ref: `tx-${orderDoc._id}`,  
         callback_url: "https://718f-196-190-90-211.ngrok-free.app/api/webhook",
-        return_url: `http://localhost:3000/thankYou?order_id=${orderDoc._id}`, 
+        return_url: `https://amifabroast.vercel.app/thankYou?order_id=${orderDoc._id}`, 
         customizations: {
             title: "Food Order Payment",
             description: "Payment for your order with delivery",
