@@ -1,13 +1,12 @@
 'use client'
 
-import Link from "next/link";
-import Header from "../components/layout/header";
 import Hero from "../components/layout/hero";
 import HomeMenu from "../components/layout/homeMenu";
 import SectionHeaders from "../components/layout/sectionheaders";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Footer from "@/components/layout/footer";
 
 export default function Home() {
   useEffect(() => {
@@ -53,6 +52,7 @@ export default function Home() {
           <p><strong>Working Hours:</strong> Mon-Fri, 9:00 AM - 6:00 PM</p>
         </div>
       </section>
+      <Footer/>
     </div>
   );
 }

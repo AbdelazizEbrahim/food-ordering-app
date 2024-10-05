@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import MenuItem from "../../components/menu/menuItem";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Footer from "@/components/layout/footer";
 
 export default function MenuPage(){
     const [categories, setCategories] = useState([]);
@@ -27,20 +28,23 @@ export default function MenuPage(){
     }, []);
 
     return(
-        <section className="mt-8">
-            {categories?.length > 0 && categories.map(c => (
-                <div key={c._id}>
-                    <div className="text-center" data-aos="fade-right" data-aos-delay='200'>
-                        <SectionHeaders mainHeader={c.name}/>
+       <>
+            <section className="mt-8">
+                {categories?.length > 0 && categories.map(c => (
+                    <div key={c._id}>
+                        <div className="text-center" data-aos="fade-right" data-aos-delay='200'>
+                            <SectionHeaders mainHeader={c.name}/>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6 mb-12 "data-aos='fade-right' data-aos-delay='500'>
+                            {menuItems?.filter(item => item.category === c._id).map(item => (
+                                <MenuItem  key={item._id} {...item}/>
+                            ))}
+                        </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6 mb-12 "data-aos='fade-right' data-aos-delay='500'>
-                        {menuItems?.filter(item => item.category === c._id).map(item => (
-                            <MenuItem  key={item._id} {...item}/>
-                        ))}
-                    </div>
-                </div>
-            ))}
-        </section>
+                ))}
+            </section>
+        <Footer/>
+       </>
     )
 
 }
