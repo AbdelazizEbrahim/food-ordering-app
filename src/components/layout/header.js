@@ -49,7 +49,7 @@ export default function Header() {
         <header className="fixed w-full z-50 mr-96 left-2 bg-white p-1 top-0">
             <div className="flex items-center md:hidden justify-between">
                 <Link className="text-primary font-semibold text-2xl" href={'/'}>
-                    ST PIZZA
+                    AMIFA
                 </Link>
                 <div className="flex gap-8 items-center">
                     <Link href={'/cart'} className="relative">
