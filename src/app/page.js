@@ -46,7 +46,7 @@ export default function Home() {
           mainHeader="Contact Us"
         />
         <div className="mt-8 text-gray-500">
-          <p><strong>Call: :</strong> +251 975 805 980</p>
+          <p><strong>Call: :</strong> +251 900 000 000</p>
           <p><strong>Address:</strong> Near Betel Mosque, Addis Ababa, Ethiopia</p>
           <p><strong>Email:</strong> contact@example.com</p>
           <p><strong>Working Hours:</strong> Mon-Fri, 9:00 AM - 6:00 PM</p>
