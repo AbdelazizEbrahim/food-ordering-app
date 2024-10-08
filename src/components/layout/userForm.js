@@ -6,8 +6,8 @@ import { storage } from '@/libs/firebase';
 import toast from "react-hot-toast";
 import { useProfile } from "../useProfile";
 import AddressInputs from "./addressInputs";
-import AOS from "aos";  // Import AOS
-import "aos/dist/aos.css";  // Import AOS styles
+import AOS from "aos";  
+import "aos/dist/aos.css";  
 
 export default function UserForm({ user, onSave }) {
   const [userName, setUserName] = useState('');
@@ -161,8 +161,8 @@ export default function UserForm({ user, onSave }) {
 
         <button
           type="submit"
-          className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg"
-          data-aos="fade-up"
+          onClick={handleSubmit}
+          className="mb-4 bg-blue-500 text-white px-6 py-2 rounded-lg"
         >
           Save Profile
         </button>

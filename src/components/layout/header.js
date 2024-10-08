@@ -45,6 +45,8 @@ export default function Header() {
         userName = userName.split(' ')[0];
     }
 
+    const closeMobileNav = () => setMobileNavOpen(false);
+
     return (
         <header className="fixed w-full z-50 mr-96 left-2 bg-white p-1 top-0">
             <div className="flex items-center md:hidden justify-between">
@@ -73,12 +75,13 @@ export default function Header() {
             </div>
             {mobileNavOpen && (
                 <div
-                    onClick={() => setMobileNavOpen(false)}
-                    className="md:hidden p-4 bg-gray-200 rounded-lg mt-2 flex flex-col gap-2 text-center">
-                    <Link href={'/'}>Home</Link>
-                    <Link href={'/menu'}>Menu</Link>
-                    <Link href={'/#about'}>About</Link>
-                    <Link href={'/#contact'}>Contact</Link>
+                    className="md:hidden p-4 bg-gray-200 rounded-lg mt-2 flex flex-col gap-2 text-center"
+                    onClick={closeMobileNav} // Close mobile nav on clicking background
+                >
+                    <Link href={'/'} onClick={closeMobileNav}>Home</Link>
+                    <Link href={'/menu'} onClick={closeMobileNav}>Menu</Link>
+                    <Link href={'/#about'} onClick={closeMobileNav}>About</Link>
+                    <Link href={'/#contact'} onClick={closeMobileNav}>Contact</Link>
                     <AuthLinks status={status} userName={userName} />
                 </div>
             )}
@@ -92,7 +95,7 @@ export default function Header() {
                     <Link href={'/#about'}>About</Link>
                     <Link href={'/#contact'}>Contact</Link>
                 </nav>
-                <nav className="flex gap-4  items-center  text-gray-500 font-semibold mr-10">
+                <nav className="flex gap-4 items-center text-gray-500 font-semibold mr-10">
                     <AuthLinks status={status} userName={userName} />
                     <Link href={'/cart'} className="relative">
                         <ShoppingCart />
