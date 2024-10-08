@@ -73,17 +73,17 @@ export default function Footer() {
             <h1 className="text-[17px] text-gray-900 font-semibold mb-[1.5rem]">
               About
             </h1>
-            <Link href="https://en.wikipedia.org/wiki/Hajj" target="_blank" className="block text-black opacity-80 text-[15px] cursor-pointer hover:text-yellow-600">
-              Hajj
+            <Link href="https://www.yummytummyaarthi.com/broasted-chicken-recipe/" target="_blank" className="block text-black opacity-80 text-[15px] cursor-pointer hover:text-yellow-600">
+              Chicken
             </Link>
-            <Link href="https://en.wikipedia.org/wiki/Umrah" target="_blank" className="block text-black opacity-80 text-[15px] cursor-pointer hover:text-yellow-600">
-              Ummrah
+            <Link href="https://en.wikipedia.org/wiki/Pizza" target="_blank" className="block text-black opacity-80 text-[15px] cursor-pointer hover:text-yellow-600">
+              Pizza
             </Link>
-            <Link href="https://en.wikipedia.org/wiki/Ethiopia" target="_blank" className="block text-black opacity-80 text-[15px] cursor-pointer hover:text-yellow-600">
-              Ethiopia
+            <Link href="https://en.wikipedia.org/wiki/Ethiopian_cuisine" target="_blank" className="block text-black opacity-80 text-[15px] cursor-pointer hover:text-yellow-600">
+              Meal
             </Link>
-            <Link href="https://en.wikipedia.org/wiki/Africa" target="_blank" className="block text-black opacity-80 text-[15px] cursor-pointer hover:text-yellow-600">
-              Africa
+            <Link href="https://www.tryotter.com/resource/wiki/popular-ethiopian-food#:~:text=The%20most%20popular%20dishes%20include,a%20culinary%20adventure%20worth%20exploring." target="_blank" className="block text-black opacity-80 text-[15px] cursor-pointer hover:text-yellow-600">
+              Popular
             </Link>
           </div>
         </div>
