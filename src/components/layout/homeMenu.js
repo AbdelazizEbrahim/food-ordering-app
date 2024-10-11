@@ -12,8 +12,8 @@ export default function HomeMenu() {
 
     useEffect(() => {
         AOS.init({
-            duration: 1200, // Customize animation duration (in ms)
-            once: true,     // Trigger animation only once
+            duration: 1200, 
+            once: true,   
         });
 
         fetch('/api/menu-items')
@@ -24,7 +24,7 @@ export default function HomeMenu() {
             return res.json();
           })
           .then(MenuItems => {
-            setBestSellers(MenuItems.slice(-3)); // Get the last 3 items
+            setBestSellers(MenuItems.slice(-3));
           })
           .catch(error => {
             console.error('Error fetching menu items:', error);

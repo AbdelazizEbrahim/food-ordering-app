@@ -21,7 +21,7 @@ export default function MenuItemTile({onAddToCart, ...item}) {
           onClick={onAddToCart}
           className='mt-4 bg-primary text-white rounded-full px-8 py-2'>
           {hasSizesOrExtras ? (
-            <span>Add to cart (from Br.{price})</span>
+            <span className="whitespace-nowrap">Add to cart (from Br.{price})</span>
           ) : (
             <span>Add to cart Br.{price}</span>
           )}
